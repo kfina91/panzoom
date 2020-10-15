@@ -27,7 +27,7 @@ module.exports = createPanZoom;
  */
 function createPanZoom(domElement, options) {
   options = options || {};
-
+  
   var panController = options.controller;
 
   if (!panController) {
@@ -69,7 +69,8 @@ function createPanZoom(domElement, options) {
   var speed = typeof options.zoomSpeed === 'number' ? options.zoomSpeed : defaultZoomSpeed;
   var transformOrigin = parseTransformOrigin(options.transformOrigin);
   var textSelection = options.enableTextSelection ? fakeTextSelectorInterceptor : domTextSelectionInterceptor;
-
+  var useRightButtonForPan = typeof options.useRightButtonForPan === 'boolean' ? options.useRightButtonForPan : false;
+  
   validateBounds(bounds);
 
   if (options.autocenter) {
@@ -738,9 +739,8 @@ function createPanZoom(domElement, options) {
     // for Firefox, left click == 0
     var isLeftButton =
       (e.button === 1 && window.event !== null) || e.button === 0;
-    if (!isLeftButton) return;
-
-    smoothScroll.cancel();
+	if (isLeftButton ? useRightButtonForPan : !useRightButtonForPan) return;
+	smoothScroll.cancel();
 
     var offset = getOffsetXY(e);
     var point = transformToScreen(offset.x, offset.y);

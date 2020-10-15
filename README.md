@@ -1,3 +1,16 @@
+# Changes in this repo:
+
+Added "useRightButtonForPan" to options.
+To make it work, you also have to prevent basic right-click behavior.
+In Vue it could be done like this
+```
+<div id="surrounding stuff" @contextmenu.prevent>
+  <panZoom :options="{useRightButtonForPan: true} @contextmenu.prevent>
+    <!-- Insert your stuff here -->
+  </panZoom>
+</div>
+```
+
 # panzoom [![Build Status](https://travis-ci.org/anvaka/panzoom.svg)](https://travis-ci.org/anvaka/panzoom)
 
 Extensible, mobile friendly pan and zoom framework (supports DOM and SVG).
